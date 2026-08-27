@@ -4,6 +4,7 @@ from pandera.errors import SchemaError
 
 from maptask_vlm.validation import (
     validate_dialogues,
+    validate_experiment_cases,
     validate_landmarks,
     validate_utterances,
 )
@@ -94,3 +95,41 @@ def test_validate_landmarks_rejects_bad_status_value():
     )
     with pytest.raises(SchemaError):
         validate_landmarks(df)
+
+
+def test_validate_experiment_cases_accepts_valid_data():
+    df = pl.DataFrame(
+        {
+            "case_id": ["q1ec1_2_caravan_park"],
+            "dialogue_id": ["q1ec1"],
+            "turn_id": [2],
+            "map_path": ["data/raw/hcrc_maptask/original_maps/maps/map12f.gif"],
+            "landmark": ["caravan park"],
+            "definite_description_context": [
+                "starting off we are above a caravan park"
+            ],
+            "referent_status": ["unique"],
+            "giver_referent_status": ["unique"],
+            "human_response": ["mmhmm"],
+        }
+    )
+    validated = validate_experiment_cases(df)
+    assert validated.height == 1
+
+
+def test_validate_experiment_cases_allows_null_human_response():
+    df = pl.DataFrame(
+        {
+            "case_id": ["q2ec1_177_finish"],
+            "dialogue_id": ["q2ec1"],
+            "turn_id": [177],
+            "map_path": ["data/raw/hcrc_maptask/original_maps/maps/map15f.gif"],
+            "landmark": ["finish"],
+            "definite_description_context": ["that's the finish"],
+            "referent_status": ["missing"],
+            "giver_referent_status": ["unique"],
+            "human_response": [None],
+        }
+    )
+    validated = validate_experiment_cases(df)
+    assert validated.height == 1

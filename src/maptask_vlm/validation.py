@@ -68,3 +68,31 @@ LandmarksSchema = pa.DataFrameSchema(
 def validate_landmarks(df: pl.DataFrame) -> pl.DataFrame:
     """Validate the landmarks table against LandmarksSchema."""
     return LandmarksSchema.validate(df)
+
+
+ExperimentCasesSchema = pa.DataFrameSchema(
+    {
+        "case_id": pa.Column(str, unique=True),
+        "dialogue_id": pa.Column(str, pa.Check.str_matches(r"^q\d+(ec|nc)\d+$")),
+        "turn_id": pa.Column(int, pa.Check.gt(0)),
+        "map_path": pa.Column(str),
+        "landmark": pa.Column(str, pa.Check.str_length(min_value=1)),
+        "definite_description_context": pa.Column(
+            str, pa.Check.str_length(min_value=1)
+        ),
+        "referent_status": pa.Column(
+            str, pa.Check.isin(["unique", "missing", "ambiguous"])
+        ),
+        "giver_referent_status": pa.Column(
+            str, pa.Check.isin(["unique", "missing", "ambiguous"])
+        ),
+        "human_response": pa.Column(str, nullable=True),
+    },
+    strict=True,
+    coerce=True,
+)
+
+
+def validate_experiment_cases(df: pl.DataFrame) -> pl.DataFrame:
+    """Validate the final experiment cases table."""
+    return ExperimentCasesSchema.validate(df)
