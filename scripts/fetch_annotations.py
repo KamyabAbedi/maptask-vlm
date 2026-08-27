@@ -22,8 +22,7 @@ print("Downloading annotations...")
 with httpx.stream("GET", url, follow_redirects=True) as response:
     response.raise_for_status()
     with open(zip_path, "wb") as f:
-        for chunk in response.iter_bytes():
-            f.write(chunk)
+        f.writelines(response.iter_bytes())
 
 # Extract
 print("Extracting annotations...")

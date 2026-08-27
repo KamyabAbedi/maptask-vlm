@@ -1,8 +1,7 @@
-from pathlib import Path
 import zipfile
+from pathlib import Path
 
 import httpx
-
 
 # Project root: one level above /scripts
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -24,8 +23,7 @@ with httpx.stream("GET", url, follow_redirects=True) as response:
     response.raise_for_status()
 
     with open(zip_path, "wb") as f:
-        for chunk in response.iter_bytes():
-            f.write(chunk)
+        f.writelines(response.iter_bytes())
 
 # Extract
 print("Extracting transcripts...")
