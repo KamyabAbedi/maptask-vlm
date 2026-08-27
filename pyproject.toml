@@ -20,6 +20,13 @@ maptask-vlm = "maptask_vlm:main"
 requires = ["uv_build>=0.12.6,<0.13.0"]
 build-backend = "uv_build"
 
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+    "ruff>=0.16.4",
+    "ty>=0.0.75",
+]
+
 [tool.ruff.lint.per-file-ignores]
 # Marimo cell functions intentionally end with a bare "display" expression
 # and/or an explicit `return` -- both are normal Marimo notebook idioms, not
