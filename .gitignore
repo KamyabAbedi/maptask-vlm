@@ -1,0 +1,37 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Raw corpus data — never modify, don't commit large raw files
+data/raw/*
+!data/raw/.gitkeep
+
+# Interim / processed data (regenerable via pipeline)
+data/interim/*
+!data/interim/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+
+# Results (regenerable)
+results/predictions/*
+!results/predictions/.gitkeep
+results/figures/*
+!results/figures/.gitkeep
+results/tables/*
+!results/tables/.gitkeep
+
+# Marimo / notebook caches
+__marimo__/
+
+# Env / secrets
+.env
+
+# OS
+.DS_Store
