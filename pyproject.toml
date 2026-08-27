@@ -7,7 +7,11 @@ authors = [
     { name = "Kamyab", email = "kamyababedi@gmail.com" }
 ]
 requires-python = ">=3.14"
-dependencies = []
+dependencies = [
+    "httpx>=0.28.1",
+    "marimo>=0.24.0",
+    "polars>=1.44.1",
+]
 
 [project.scripts]
 maptask-vlm = "maptask_vlm:main"
