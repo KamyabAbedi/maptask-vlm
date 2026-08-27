@@ -87,6 +87,7 @@ ExperimentCasesSchema = pa.DataFrameSchema(
             str, pa.Check.isin(["unique", "missing", "ambiguous"])
         ),
         "human_response": pa.Column(str, nullable=True),
+        "giver_map_path": pa.Column(str),
     },
     strict=True,
     coerce=True,

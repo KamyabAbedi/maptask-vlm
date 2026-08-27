@@ -104,6 +104,7 @@ def test_validate_experiment_cases_accepts_valid_data():
             "dialogue_id": ["q1ec1"],
             "turn_id": [2],
             "map_path": ["data/raw/hcrc_maptask/original_maps/maps/map12f.gif"],
+            "giver_map_path": ["data/raw/hcrc_maptask/original_maps/maps/map12g.gif"],
             "landmark": ["caravan park"],
             "definite_description_context": [
                 "starting off we are above a caravan park"
@@ -124,6 +125,7 @@ def test_validate_experiment_cases_allows_null_human_response():
             "dialogue_id": ["q2ec1"],
             "turn_id": [177],
             "map_path": ["data/raw/hcrc_maptask/original_maps/maps/map15f.gif"],
+            "giver_map_path": ["data/raw/hcrc_maptask/original_maps/maps/map12g.gif"],
             "landmark": ["finish"],
             "definite_description_context": ["that's the finish"],
             "referent_status": ["missing"],

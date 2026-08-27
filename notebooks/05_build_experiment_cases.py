@@ -81,16 +81,37 @@ def _(Path, experiment_cases, pl):
 
 
 @app.cell
-def _(Path, experiment_cases):
+def _(Path, experiment_cases_with_giver_map):
     from maptask_vlm.validation import validate_experiment_cases
 
-    experiment_cases_validated = validate_experiment_cases(experiment_cases)
+    # experiment_cases_validated = validate_experiment_cases(experiment_cases)
+    experiment_cases_validated = validate_experiment_cases(experiment_cases_with_giver_map)
 
     cases_output_path = Path("data/processed/experiment_cases.parquet")
     cases_output_path.parent.mkdir(parents=True, exist_ok=True)
     experiment_cases_validated.write_parquet(cases_output_path)
 
     cases_output_path, experiment_cases_validated.shape
+    return
+
+
+@app.cell
+def _(experiment_cases, pl):
+    experiment_cases_with_giver_map = experiment_cases.with_columns(
+        pl.col("map_path").str.replace("f.gif", "g.gif").alias("giver_map_path")
+    )
+
+    experiment_cases_with_giver_map.select("map_path", "giver_map_path").head(3)
+    return (experiment_cases_with_giver_map,)
+
+
+@app.cell
+def _(Path, experiment_cases_with_giver_map, pl):
+    experiment_cases_with_giver_map.with_columns(
+        pl.col("giver_map_path").map_elements(
+            lambda p: Path(p).exists(), return_dtype=pl.Boolean
+        ).alias("giver_map_file_exists")
+    )["giver_map_file_exists"].value_counts()
     return
 
 
