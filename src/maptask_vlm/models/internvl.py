@@ -121,6 +121,11 @@ class InternVLModel:
         self.tokenizer = AutoTokenizer.from_pretrained(
             model_id, trust_remote_code=True, use_fast=False, cache_dir=cache_dir
         )
+        print(f"DEBUG: tokenizer type = {type(self.tokenizer)}", flush=True)
+        print(
+            f"DEBUG: has convert_tokens_to_ids = {hasattr(self.tokenizer, 'convert_tokens_to_ids')}",
+            flush=True,
+        )
 
     def answer(
         self, image_path: str | Path, prompt: str, max_new_tokens: int = 128
