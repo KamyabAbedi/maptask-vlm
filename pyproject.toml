@@ -35,4 +35,4 @@ dev = [
 "notebooks/*.py" = ["B018", "PLR1711"]
 
 [tool.ty.src]
-exclude = ["src/maptask_vlm/models.py"]
+exclude = ["src/maptask_vlm/models/*"]

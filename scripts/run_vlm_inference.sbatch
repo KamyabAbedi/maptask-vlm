@@ -25,6 +25,6 @@ pip install --quiet -e .
 export HF_HOME="$HOME/hf-cache"
 mkdir -p "$HF_HOME"
 
-python scripts/run_vlm_inference.py --model qwen2.5-vl-7b
+python scripts/run_vlm_inference.py --model "${MODEL_NAME:-qwen2.5-vl-7b}"
 
 module purge
