@@ -1,7 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=maptask-vlm-qwen
 #SBATCH --partition=p_csunivie_gres
-#SBATCH --nodelist=vader
 #SBATCH --gres=gpu:h100:1
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=64G
@@ -12,14 +11,20 @@
 set -euo pipefail
 
 mkdir -p logs
+cd "$SLURM_SUBMIT_DIR"
 
 source /etc/profile.d/modules.sh
-module load python
 
-cd "$SLURM_SUBMIT_DIR"
-source .venv-gpu/bin/activate
+export ENV_MODE="permanent"
+export ENV_NAME="maptask-vlm-gpu"
+module load python/3.11.11
 
-export HF_HOME=/scratch/$USER/hf-cache
+pip install --quiet -r requirements-cluster.txt
+pip install --quiet -e .
+
+export HF_HOME="$HOME/hf-cache"
 mkdir -p "$HF_HOME"
 
 python scripts/run_vlm_inference.py --model qwen2.5-vl-7b
+
+module purge

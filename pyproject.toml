@@ -6,7 +6,7 @@ readme = "README.md"
 authors = [
     { name = "Kamyab", email = "kamyababedi@gmail.com" }
 ]
-requires-python = ">=3.14"
+requires-python = ">=3.11"
 dependencies = [
     "httpx>=0.28.1",
     "marimo>=0.24.0",
@@ -33,3 +33,6 @@ dev = [
 # and/or an explicit `return` -- both are normal Marimo notebook idioms, not
 # bugs, so we don't want ruff flagging them here.
 "notebooks/*.py" = ["B018", "PLR1711"]
+
+[tool.ty.src]
+exclude = ["src/maptask_vlm/models.py"]
