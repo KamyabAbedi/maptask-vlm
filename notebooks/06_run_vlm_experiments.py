@@ -82,12 +82,27 @@ def _(ambiguous_pool, pilot_sample, pl):
 
 
 @app.cell
-def _(Path, pilot_full):
+def _(Path, pilot_full_fixed):
     pilot_output_path = Path("data/interim/pilot_cases.parquet")
     pilot_output_path.parent.mkdir(parents=True, exist_ok=True)
-    pilot_full.write_parquet(pilot_output_path)
+    pilot_full_fixed.write_parquet(pilot_output_path)
 
-    pilot_output_path, pilot_full.shape
+    pilot_output_path, pilot_full_fixed.shape
+    return
+
+
+@app.cell
+def _(pilot_full, pl):
+    pilot_full_fixed = pilot_full.with_columns(
+        (pl.col("experiment_type") + "__" + pl.col("case_id")).alias("case_id")
+    )
+
+    pilot_full_fixed["case_id"].n_unique(), pilot_full_fixed.height
+    return (pilot_full_fixed,)
+
+
+@app.cell
+def _():
     return
 
 
