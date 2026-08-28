@@ -14,7 +14,7 @@ from pathlib import Path
 
 import polars as pl
 
-from maptask_vlm.models import MolmoModel, QwenVLModel
+from maptask_vlm.models import InternVLModel, MolmoModel, QwenVLModel
 from maptask_vlm.prompts import (
     build_follower_grounding_prompt,
     build_giver_ambiguity_prompt,
@@ -27,6 +27,7 @@ RESULTS_DIR = PROJECT_ROOT / "results" / "predictions"
 MODEL_REGISTRY = {
     "qwen2.5-vl-7b": QwenVLModel,
     "molmo-7b-d": MolmoModel,
+    "internvl2.5-8b": InternVLModel,
 }
 
 

@@ -9,3 +9,5 @@ accelerate==1.3.0
 pillow
 polars
 einops
+timm
+sentencepiece
