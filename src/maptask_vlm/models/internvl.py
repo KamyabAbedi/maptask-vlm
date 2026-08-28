@@ -134,7 +134,10 @@ class InternVLModel:
         question = f"<image>\n{prompt}"
         with torch.no_grad():
             response = self.model.chat(
-                self.tokenizer, pixel_values, question, generation_config
+                tokenizer=self.tokenizer,
+                pixel_values=pixel_values,
+                question=question,
+                generation_config=generation_config,
             )
 
         return response
