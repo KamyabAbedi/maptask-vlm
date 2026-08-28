@@ -43,11 +43,15 @@ def build_prompt_and_image(row: dict) -> tuple[str, str]:
 
 
 def load_completed_case_ids(output_path: Path) -> set[str]:
-    """Read already-saved results (if any) to support resuming."""
+    """Read already-saved SUCCESSFUL results (if any) to support resuming.
+    Cases that previously errored (raw_response is null) are excluded, so
+    they get retried rather than permanently skipped.
+    """
     if not output_path.exists():
         return set()
     existing = pl.read_ndjson(output_path)
-    return set(existing["case_id"].to_list())
+    successful = existing.filter(pl.col("raw_response").is_not_null())
+    return set(successful["case_id"].to_list())
 
 
 def main(model_name: str) -> None:
