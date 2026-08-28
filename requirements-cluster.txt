@@ -11,3 +11,4 @@ polars
 einops
 timm
 sentencepiece
+protobuf
