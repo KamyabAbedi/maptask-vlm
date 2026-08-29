@@ -97,3 +97,25 @@ ExperimentCasesSchema = pa.DataFrameSchema(
 def validate_experiment_cases(df: pl.DataFrame) -> pl.DataFrame:
     """Validate the final experiment cases table."""
     return ExperimentCasesSchema.validate(df)
+
+
+GmmtReferenceExpressionsSchema = pa.DataFrameSchema(
+    {
+        "ref_id": pa.Column(str, unique=True),
+        "dialogue_id": pa.Column(str),
+        "concept_id": pa.Column(str),
+        "expression": pa.Column(str),
+        "speaker": pa.Column(str, pa.Check.isin(["giver", "follower"])),
+        "addressee": pa.Column(str, pa.Check.isin(["giver", "follower"])),
+        "utt_id": pa.Column(int),
+        "understanding_state": pa.Column(
+            str, pa.Check.isin(["aligned", "pending", "misunderstood"])
+        ),
+    },
+    strict=False,  # allow extra columns (cascade attributes, reason, etc.)
+)
+
+
+def validate_gmmt_reference_expressions(df: pl.DataFrame) -> pl.DataFrame:
+    """Validate the core columns of the GMMT reference expressions table."""
+    return GmmtReferenceExpressionsSchema.validate(df)
