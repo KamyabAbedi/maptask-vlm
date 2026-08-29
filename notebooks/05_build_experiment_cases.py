@@ -115,10 +115,5 @@ def _(Path, experiment_cases_with_giver_map, pl):
     return
 
 
-@app.cell
-def _():
-    return
-
-
 if __name__ == "__main__":
     app.run()
